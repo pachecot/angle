@@ -1,6 +1,14 @@
+// Package angle provides a generalized angular measurement type.
+//
+// It supports conversions between degrees, radians, arcminutes, minutes of time,
+// hours of time, days of time, and time.Duration. It also provides common
+// trigonometric functions and angle normalization methods.
 package angle
 
-import "math"
+import (
+	"math"
+	"time"
+)
 
 // Angle is a generalized angular measurement type
 type Angle float64
@@ -58,6 +66,11 @@ func (ang Angle) Hours() float64 {
 // Days returns the Days (time) from the angle
 func (ang Angle) Days() float64 {
 	return float64(ang * day)
+}
+
+// Duration returns the Duration (time) from the angle
+func (ang Angle) Duration() time.Duration {
+	return time.Duration(ang * minute * Angle(time.Minute.Nanoseconds()))
 }
 
 // Mod returns a normalized angle from -360 to 360 degrees
